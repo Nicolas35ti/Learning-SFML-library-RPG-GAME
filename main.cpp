@@ -1,40 +1,19 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <math.h>
 
+sf::Vector2f NormalizeVector(sf::Vector2f vector) {
+    float m = std::sqrt(vector.x * vector.x + vector.y * vector.y);
+
+    sf::Vector2f normalizedVector;
+    normalizedVector.x = vector.x / m;
+    normalizedVector.y = vector.y / m;
+
+    return normalizedVector;
+}
 
 int main() {
-    std::vector <std::string> topFiveBandsOfAllTime;
-    topFiveBandsOfAllTime.reserve(5); //reserva extamante 5 espaços na RAM
-
-    topFiveBandsOfAllTime.push_back("Nirvana");
-    topFiveBandsOfAllTime.push_back("Ramones");
-    topFiveBandsOfAllTime.push_back("Green Day");
-    topFiveBandsOfAllTime.push_back("Descendents");
-    topFiveBandsOfAllTime.push_back("Sex Pistols");
-
-    std::cout << "Count:" << topFiveBandsOfAllTime.size() << std::endl;
-    std::cout << "Capacity:" << topFiveBandsOfAllTime.capacity() << std::endl; //Quanto espaço tem reservado na RAM.
-
-    /*for (size_t i = 0; i < topFiveBandsOfAllTime.size(); i++) {
-        std::cout << topFiveBandsOfAllTime[i] << std::endl;
-    } */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     //-------------------------------- INITIALIZE -----------------------------------
     sf::ContextSettings settings;
@@ -43,6 +22,9 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "RPG Game", sf::Style::Default, settings);
     //-------------------------------- INITIALIZE -----------------------------------
 
+    std::vector <sf::RectangleShape> bullets;
+
+    float bulletSpeed = 0.5f;
     //-------------------------------- LOAD -----------------------------------
 
     //-------------------------------- Enemy ---------------------
@@ -52,7 +34,7 @@ int main() {
     if(enemyTexture.loadFromFile("assets/enemy/textures/enemy-spritesheet.png")) {
         std::cout << "Player image loaded!" << std::endl;
         enemySprite.setTexture(enemyTexture);
-        enemySprite.setPosition(sf::Vector2f(400, 100));
+        enemySprite.setPosition(sf::Vector2f(1600, 700));
 
         int XIndex = 4;
         int YIndex = 0;
@@ -76,13 +58,16 @@ int main() {
         int YIndex = 0;
 
         playerSprite.setTextureRect(sf::IntRect(XIndex * 80, YIndex * 110, 80, 110));
+        playerSprite.setPosition(sf::Vector2f(0, 0));
     } else {
         std::cout << "Player image failed to load! :(" << std::endl;
     }
     //-------------------------------- Player ---------------------
-
     //-------------------------------- LOAD -----------------------------------
     
+   //----------- CALCULATE DIRECTION OF THE BULLET -----------
+    //----------- CALCULATE DIRECTION OF THE BULLET -----------
+
     //main game loop
     while(window.isOpen()) {
 
@@ -94,6 +79,9 @@ int main() {
                 window.close();
             }
         }
+
+
+        //bullet.setPosition(bullet.getPosition() + bulletDirection * bulletSpeed);
 
         //SISTEMA DE MOVIMENTACAO
         sf::Vector2f position = playerSprite.getPosition();
@@ -109,12 +97,36 @@ int main() {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
             playerSprite.setPosition(position + sf::Vector2f(1, 0));
+
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+            //adiciona uma nova bala no vetor bullets
+            bullets.push_back(sf::RectangleShape(sf::Vector2f(50, 25)));
+            //o size mostra o tamanho da lista = 3, mas quero o ultimo indice que é 2, por isso size() - 1
+            //a ultima bala aparece no player
+            int i = bullets.size() - 1;
+            bullets[i].setPosition(playerSprite.getPosition());
+        }
+
+        for (size_t i = 0; i < bullets.size(); i++) {
+                        //direction = target - current location
+                        //onde a bala deve ir
+            sf::Vector2f bulletDirection = enemySprite.getPosition() - bullets[i].getPosition();
+            bulletDirection = NormalizeVector(bulletDirection);  
+            //move a bala [ 0 -> -> -> ->]
+            bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
+        }
         //-------------------------------- UPDATE -----------------------------------
 
         //-------------------------------- DRAW -----------------------------------
         window.clear(sf::Color::Black);
         window.draw(enemySprite);
         window.draw(playerSprite);
+
+        //renderiza todas as balas da lista
+        for (size_t i = 0; i < bullets.size(); i++) {
+            window.draw(bullets[i]);
+        }
+
         window.display();
         //-------------------------------- DRAW -----------------------------------
 
