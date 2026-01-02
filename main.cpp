@@ -1,7 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
-#include <vector>
-#include <math.h>
 
 #include "Player.h"
 #include "Enemy.h"
@@ -26,9 +23,6 @@ int main() {
     player.Load();
     enemy.Load();
     //-------------------------------- LOAD -----------------------------------
-    
-   //----------- CALCULATE DIRECTION OF THE BULLET -----------
-    //----------- CALCULATE DIRECTION OF THE BULLET -----------
 
     //main game loop
     while(window.isOpen()) {
@@ -41,9 +35,6 @@ int main() {
                 window.close();
             }
         }
-
-
-        //bullet.setPosition(bullet.getPosition() + bulletDirection * bulletSpeed);
 
         enemy.Update();
         player.Update(enemy);
