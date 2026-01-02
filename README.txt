@@ -61,3 +61,52 @@ y-axis  490 / 989.7979591815 = 0.495050
 sqrt(-0.86886418 * -0.86886418 + -0.495050 * -0.495050)
 sqrt(0.999998)
 1   -> quantidade de vetores, 1 unico vetor
+
+
+
+
+----- Static, Passing by References and Value, Translation Unit -----
+Como funciona uma função em C++?
+Basicamente, quando passamos algo por uma função, ela COPIA o valor passado
+    Exemplo:
+        void ReduceHP (int hp) {
+            hp --;
+        }
+
+        int main() {
+            int health = 100;
+            ReduceHP(health);
+
+            std::cout << health << std::endl;          -> [Ainda assim, a saída será "100", pois não está retornando nada]
+        }
+
+
+        health      |       hp
+        0x00A5      |       hp              -> [São duas variáveis diferentes, o que ocorre é somente a copia do valor de health]
+        [100]       |       [100]           
+
+
+
+        int ReduceHP (int hp) {
+            return --hp;                -> [Nesse caso a saída é "99", pois a função está retornando algo]
+        }
+
+
+
+        OU
+        REFERENCIA
+
+        Caso eu utilize uma referencia ("&"), ainda assim funciona, mesmo eu nao retornando nada
+
+        void ReduceHP (int& hp) {
+            --hp                        -> [Nesse caso, quando eu escrevo isso na main -> [ReduceHP(health)] o código, ao invés de passar somente o valor de health, ele passa o endereço de memória [0x00A5], fazendo com que o hp e health sejam a mesma coisa e quando a função [--hp], essa mudança ocorre no health da main]
+        }
+
+                            
+        [hp]& - [heath] -> [hp] --hp    [health] -> [hp]        [health]
+        n/A     100        (health)     100         (health)    99                  AMBOS POSSUEM O MESMO ENDEREÇO DE MEMORIA, POR ISSO QUANDO EU ALTERO O VALOR DE HP O VALOR DE HEALTH TBM ALTERA
+                            100                     99
+
+
+
+Quando usar "static"? Quando não importa de ter multiplos objetos compartilhando da mesma data.

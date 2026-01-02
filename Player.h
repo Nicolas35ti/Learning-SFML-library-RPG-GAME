@@ -1,0 +1,18 @@
+#pragma once
+#include <SFML/Graphics.hpp>
+#include "Enemy.h"
+
+class Player {
+private:
+    sf::Texture texture;
+
+    std::vector <sf::RectangleShape> bullets;
+    float bulletSpeed = 0.5f;
+    
+    public:
+    sf::Sprite sprite;
+    void Initialize();  // <- called once
+    void Load();        // <- called once per app start
+    void Update(Enemy& enemy);      // <- once per frame
+    void Draw(sf::RenderWindow& window);        // <- once per frame
+};
