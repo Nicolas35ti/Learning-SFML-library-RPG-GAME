@@ -4,6 +4,12 @@
 
 void Player::Initialize()
 {
+    //seta um quadrado transparente só com as bordas em vermelho
+    boundingRectangle.setFillColor(sf::Color::Transparent);
+    boundingRectangle.setOutlineColor(sf::Color::Red);
+    boundingRectangle.setOutlineThickness(1);
+    
+    size = sf::Vector2i(80, 110);
 }
 
 void Player::Load()
@@ -15,8 +21,10 @@ void Player::Load()
         int XIndex = 1;
         int YIndex = 0;
 
-        sprite.setTextureRect(sf::IntRect(XIndex * 80, YIndex * 110, 80, 110));
+        sprite.setTextureRect(sf::IntRect(XIndex * size.x, YIndex * size.y, size.x, size.y));
         sprite.setPosition(sf::Vector2f(0, 0));
+
+        boundingRectangle.setSize(sf::Vector2f(size.x, size.y));
     } else {
         std::cout << "Player image failed to load! :(" << std::endl;
     }
@@ -58,11 +66,19 @@ void Player::Update(Enemy& enemy)
         bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
     }
 
+    boundingRectangle.setPosition(sprite.getPosition());
+
+    //verifica, pela funcao se o sprite do nosso player encostou no sprite do inimigo
+    if(Math::DidRectCollide(sprite.getGlobalBounds(), enemy.sprite.getGlobalBounds())) {
+        std::cout << "Collision" << std::endl;
+    }
+
 }
 
 void Player::Draw(sf::RenderWindow& window)
 {
     window.draw(sprite);
+    window.draw(boundingRectangle);
 
     //renderiza todas as balas da lista
     for (size_t i = 0; i < bullets.size(); i++) {

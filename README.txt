@@ -110,3 +110,23 @@ Basicamente, quando passamos algo por uma função, ela COPIA o valor passado
 
 
 Quando usar "static"? Quando não importa de ter multiplos objetos compartilhando da mesma data.
+
+
+
+
+
+----- AABB Collision -----
+Axis Aligned Bounding Box
+
+1. Se a ponta de uma forma for MAIOR que a ponta de uma segunda forma, há uma colisão.
+2. Se a outra ponta da segunda forma for maior que que a outra ponta da primeira forma.
+
+Se a ponta DIREITA da caixa branca for MAIOR que a ponta ESQUERDA da caixa preta E a ponta DIREITA da caixa preta for MENOR que a ponta ESQUERDA da caixa branca HÁ UMA COLISÃO!
+
+if (whiteBox.Right > blackBox.Left &&
+    blackBox.Right > whiteBox.Left)
+
+Se a parte de BAIXO do cubo preto for MAIOR que a parte de CIMA do cubo branco E a parte de BAIXO do cubo branco for MAIOR que a parte de CIMA do cubo preto, HÁ UMA COLISÃO!
+
+if (blackBox.bottom > whiteBox.top &&
+    whiteBox.bottom > blackBox.top)
