@@ -130,3 +130,44 @@ Se a parte de BAIXO do cubo preto for MAIOR que a parte de CIMA do cubo branco E
 
 if (blackBox.bottom > whiteBox.top &&
     whiteBox.bottom > blackBox.top)
+
+
+
+
+
+----- frame rate independent movement delta Time -----
+delta Time = quanto tempo um frame leva para renderizar
+    |
+    -> Se o framerate estiver baixo, o valor de deltaTime vai ta ALTERO
+
+Exemplo com movimentação:
+
+position += direction * speed * deltaTime
+|            1,0           1     60
+|
+|           Sem o dT = a position vai se mover a 1 segundo inteiro para mover 1 unico pixel | 1,0 * 1 = 1,0
+|           COm o dT = a position vai levar 1 segundo para mover 60 pixels | 1,0 * 1 = 1,0 * 60 = 60,0
+|
+|-> Esse loop ocorre 1 vez por frame por padrão, mas caso o framerate estiver alto, ocorrerá mais vezes, o que, caso o framerate estiver baixo, vai ocorrer em menor quantidade de vezes, deixando o movimento do jogador lento, nisso entra o deltaTime, que aumenta o seu valor com base no framerate. Aumenta quanto menor o framerate. Ex: FPS = 2 dT = 60
+
+deltaTime = 60ms    FPS = 1/sec
+1,0 * 1 = 60,0 <- 60ms
+
+deltaTime = 30ms    FPS = 2/sec
+1,0 * 1 * 30 = 30,0 <- 30ms
+                       30,0 * fps = 60
+
+A movimentação vai ser a mesma graças ao deltaTime
+
+Como ver quanto tempo 1 frame demora para renderizar?
+miliseconds / fps
+1000/60 = 16,6 per frame | 16,6 ms para renderizar 1 frame
+
+
+sf::Clock clock     <- cria um relogio
+while(window.isOpen()) {
+    sf::Time deltaTimeTimer = clock.restart();      <- reinicia o relogio e percorre ele pelo loop while, depois salva o tempo que levou na variavel
+    float deltaTime = deltaTimeTimer.asMiliseconds();   <- a variavel deltaTime vai receber o valor do Timer convertido para milisegundos
+
+    //A cada loop, ANTES de reiniciar o clock, ele salva o valor no Timer
+}

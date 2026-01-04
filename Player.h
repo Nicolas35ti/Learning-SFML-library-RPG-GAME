@@ -8,6 +8,7 @@ private:
 
     std::vector <sf::RectangleShape> bullets;
     float bulletSpeed = 0.5f;
+    float playerSpeed = 2.0f;
 
     sf::RectangleShape boundingRectangle;
 
@@ -16,6 +17,6 @@ private:
     sf::Sprite sprite;
     void Initialize();  // <- called once
     void Load();        // <- called once per app start
-    void Update(Enemy& enemy);      // <- once per frame
+    void Update(float deltaTime,Enemy& enemy);      // <- once per frame
     void Draw(sf::RenderWindow& window);        // <- once per frame
 };

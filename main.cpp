@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "Player.h"
 #include "Enemy.h"
@@ -10,6 +11,7 @@ int main() {
     settings.antialiasingLevel = 8;
     
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "RPG Game", sf::Style::Default, settings);
+    window.setFramerateLimit(240);
     //-------------------------------- INITIALIZE -----------------------------------
     Player player;
     Enemy enemy;
@@ -24,8 +26,14 @@ int main() {
     enemy.Load();
     //-------------------------------- LOAD -----------------------------------
 
+    sf::Clock clock;
     //main game loop
     while(window.isOpen()) {
+        //começa a medir quanto tempo o clock demora
+        //agora nao importa em quanto estiver o fps, o movimento de tudo vai ser igual 
+        sf::Time deltaTimeTimer = clock.restart();
+        float deltaTime = deltaTimeTimer.asMilliseconds();
+        std::cout << deltaTimeTimer.asMilliseconds() << std::endl;
 
         //-------------------------------- UPDATE -----------------------------------
         sf::Event event;
@@ -36,9 +44,8 @@ int main() {
             }
         }
 
-        enemy.Update();
-        player.Update(enemy);
-
+        enemy.Update(deltaTime);
+        player.Update(deltaTime,enemy);
 
         //-------------------------------- UPDATE -----------------------------------
 
