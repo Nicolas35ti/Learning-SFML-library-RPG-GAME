@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include "FrameRate.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -11,17 +12,20 @@ int main() {
     settings.antialiasingLevel = 8;
     
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "RPG Game", sf::Style::Default, settings);
-    window.setFramerateLimit(240);
+    window.setFramerateLimit(60);
     //-------------------------------- INITIALIZE -----------------------------------
+    FrameRate frameRate;
     Player player;
     Enemy enemy;
 
     //-------------------------------- INITIALIZE -----------------------------------
+    frameRate.Initialize();
     player.Initialize();
     enemy.Initialize();
     //-------------------------------- INITIALIZE -----------------------------------
     
     //-------------------------------- LOAD -----------------------------------
+    frameRate.Load();
     player.Load();
     enemy.Load();
     //-------------------------------- LOAD -----------------------------------
@@ -33,7 +37,8 @@ int main() {
         //agora nao importa em quanto estiver o fps, o movimento de tudo vai ser igual 
         sf::Time deltaTimeTimer = clock.restart();
         float deltaTime = deltaTimeTimer.asMilliseconds();
-        std::cout << deltaTimeTimer.asMilliseconds() << std::endl;
+
+        //std::cout << "FPS: " << 1000 / deltaTime << " | frameTime:" << deltaTime<< std::endl;
 
         //-------------------------------- UPDATE -----------------------------------
         sf::Event event;
@@ -44,6 +49,7 @@ int main() {
             }
         }
 
+        frameRate.Update(deltaTime);
         enemy.Update(deltaTime);
         player.Update(deltaTime,enemy);
 
@@ -54,6 +60,7 @@ int main() {
 
         enemy.Draw(window);
         player.Draw(window);
+        frameRate.Draw(window);
     
         window.display();
         //-------------------------------- DRAW -----------------------------------
