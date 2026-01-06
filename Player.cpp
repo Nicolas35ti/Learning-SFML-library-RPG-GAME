@@ -2,6 +2,14 @@
 #include "Math.h"
 #include <iostream>
 
+Player::Player() : bulletSpeed(0.5f), playerSpeed(1.0f)
+{
+}
+
+Player::~Player()
+{
+}
+
 void Player::Initialize()
 {
     //seta um quadrado transparente só com as bordas em vermelho

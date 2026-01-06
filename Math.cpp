@@ -13,6 +13,7 @@ sf::Vector2f Math::NormalizeVector(sf::Vector2f vector) {
 
 bool Math::DidRectCollide(sf::FloatRect rect1, sf::FloatRect rect2)
 {
+
     //checa se os quadrados colidiram
     //basicamente, pega a esquerda e adiciona a largura para determinar a direita, mesma coisa com a altura
     if (rect1.left + rect1.width > rect2.left &&

@@ -6,11 +6,18 @@ class FrameRate {
     sf::Text frameRateText;
     sf::Font font;
 
-    float timer = 0;
+    double timer;
 
     public:
+    //O construitor é sewmpr e chamado quando se cria um objeto
+    //Constructor
+    FrameRate();
+
+    //Destructor
+    ~FrameRate();
+
     void Initialize();
     void Load();
-    void Update(float deltaTime);
+    void Update(double deltaTime);
     void Draw(sf::RenderWindow& window);
 };

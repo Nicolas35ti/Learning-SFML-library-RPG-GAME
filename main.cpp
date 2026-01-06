@@ -12,7 +12,7 @@ int main() {
     settings.antialiasingLevel = 8;
     
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "RPG Game", sf::Style::Default, settings);
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(360);
     //-------------------------------- INITIALIZE -----------------------------------
     FrameRate frameRate;
     Player player;
@@ -31,12 +31,13 @@ int main() {
     //-------------------------------- LOAD -----------------------------------
 
     sf::Clock clock;
+    double deltaTime;
     //main game loop
     while(window.isOpen()) {
         //começa a medir quanto tempo o clock demora
         //agora nao importa em quanto estiver o fps, o movimento de tudo vai ser igual 
         sf::Time deltaTimeTimer = clock.restart();
-        float deltaTime = deltaTimeTimer.asMilliseconds();
+        double deltaTime = deltaTimeTimer.asMicroseconds() / 1000.0;
 
         //std::cout << "FPS: " << 1000 / deltaTime << " | frameTime:" << deltaTime<< std::endl;
 
