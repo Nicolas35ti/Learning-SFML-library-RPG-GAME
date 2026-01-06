@@ -171,3 +171,12 @@ while(window.isOpen()) {
 
     //A cada loop, ANTES de reiniciar o clock, ele salva o valor no Timer
 }
+
+
+
+----- Display FPS, constructors, destructor, rendering text -----
+Destructor: é chamado no final do escopo;
+Constructor: é chamado quando um objeto é compartilhando    -> Framerate frameRate;
+
+1 segundo - 1,000 milisegundos
+1 ms      - 1,000,000 microsegundos
