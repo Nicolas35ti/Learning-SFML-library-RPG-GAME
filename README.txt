@@ -180,3 +180,16 @@ Constructor: é chamado quando um objeto é compartilhando    -> Framerate frame
 
 1 segundo - 1,000 milisegundos
 1 ms      - 1,000,000 microsegundos
+
+
+
+
+----- Projectiles -----
+Projectiles = dependendo da velocidade de projeteis os pixels que eles atualizam sua  posiçao, a colisao com alguns elementos pode não funcionar corretame nte.
+    Projeteis lentos ou em uma velocidade  aceitavel: detecta a colisao normalmente.
+    Projetos muito rapidos: passam direto
+
+O prblema tambem pode ocorrer caso o objeto a ele colidir for muito funciona
+
+Hitscan = Gera uma linha a partir de certo ponto e, se algo estiver no caminho dessa linha, ela detecta uma colisão
+A linha não sai da arma em si, mas sim da camera
