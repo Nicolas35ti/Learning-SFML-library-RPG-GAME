@@ -1,6 +1,20 @@
 #include "Enemy.h"
 #include <iostream>
 
+Enemy::Enemy() : health(100)
+{
+}
+
+Enemy::~Enemy()
+{
+}
+
+void Enemy::changeHealth(int hp)
+{
+    health += hp;
+    healthText.setString(std::to_string(health));
+}
+
 void Enemy::Initialize()
 {
     //seta um quadrado transparente só com as bordas em vermelho
@@ -13,6 +27,15 @@ void Enemy::Initialize()
 
 void Enemy::Load()
 {
+    if (font.loadFromFile("assets/fonts/Minecraft.ttf")) {
+        std::cout << "Minecraft.ttf fonte carregou corretamente!" << std::endl;
+        //adiciona uma fonte ao texto
+        healthText.setFont(font);
+        healthText.setString(std::to_string(health));
+    } else {
+        std::cout << "Falha ao carregar Minecraft.ttf fonte." << std::endl;
+    }
+
     if(texture.loadFromFile("assets/enemy/textures/enemy-spritesheet.png")) {
         std::cout << "Player image loaded!" << std::endl;
         sprite.setTexture(texture);
@@ -32,11 +55,18 @@ void Enemy::Load()
 
 void Enemy::Update(float deltaTime)
 {
-    boundingRectangle.setPosition(sprite.getPosition());
+    if (health > 0) {
+        boundingRectangle.setPosition(sprite.getPosition());
+
+        healthText.setPosition(sprite.getPosition());
+    }
 }
 
 void Enemy::Draw(sf::RenderWindow& window)
 {
-    window.draw(sprite);
-    window.draw(boundingRectangle);
+    if (health > 0) {
+        window.draw(sprite);
+        window.draw(boundingRectangle);
+        window.draw(healthText);
+    }
 }

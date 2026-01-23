@@ -50,9 +50,11 @@ int main() {
             }
         }
 
+        sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
+
         frameRate.Update(deltaTime);
         enemy.Update(deltaTime);
-        player.Update(deltaTime,enemy);
+        player.Update(deltaTime,enemy, mousePosition);
 
         //-------------------------------- UPDATE -----------------------------------
 
