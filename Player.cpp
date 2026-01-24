@@ -2,8 +2,7 @@
 #include "Math.h"
 #include <iostream>
 
-Player::Player() : 
-    bulletSpeed(0.5f), playerSpeed(1.0f), maxFireRate(150), fireRateTimer(0)
+Player::Player() :  playerSpeed(1.0f), maxFireRate(150), fireRateTimer(0)
 {
 }
 
@@ -65,7 +64,7 @@ void Player::Update(float deltaTime,Enemy& enemy, sf::Vector2f& mousePosition)
         //adiciona uma nova bala no vetor bullets
         bullets.push_back(Bullet());
         int i = bullets.size() - 1;
-        bullets[i].Initialize(sprite.getPosition(), mousePosition);
+        bullets[i].Initialize(sprite.getPosition(), mousePosition, 0.5f);
         fireRateTimer = 0;
     }
 
@@ -82,7 +81,7 @@ void Player::Update(float deltaTime,Enemy& enemy, sf::Vector2f& mousePosition)
         if (enemy.health >= 0) {
             //verifica se cada bala encostou no sprite do inimigo
             //sempre que bala encosta no inimigo, diminui a vida dele, a bala some  e printa a vida dele
-            if(Math::DidRectCollide(bullets[i].getGlobalBounds(), enemy.sprite.getGlobalBounds())) {
+            if(Math::DidRectCollide(bullets[i].GetGlobalBounds(), enemy.sprite.getGlobalBounds())) {
                 enemy.changeHealth(-10);
                 bullets.erase(bullets.begin() + i);
         }
