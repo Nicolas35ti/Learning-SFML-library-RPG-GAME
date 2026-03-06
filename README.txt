@@ -193,3 +193,59 @@ O prblema tambem pode ocorrer caso o objeto a ele colidir for muito funciona
 
 Hitscan = Gera uma linha a partir de certo ponto e, se algo estiver no caminho dessa linha, ela detecta uma colisão
 A linha não sai da arma em si, mas sim da camera
+
+
+
+
+----- Map and Arrays -----
+TILES = imagens unicas que compoem a tela
+TILESHEET = pegar uma imagem e divida-la em quadros iguais. Cada quadrado ganha um número
+
+ARRAY de Numeros
+[0,0,0,0,1,
+ 1,2,1,1,2] = O computador passa pelo array e desenha a imagen com o numero referente do array
+
+ Cada tile vai receber um numero que sera utilizado para determinar sua posicao no mapa
+
+ *Vectors nao sao muito velozes, ja que nao sao nativos do C++ e sim uma biblioteca. eles devem estar a todo momento se movimentando dentro da memoria conforme novos itens sao adicionados
+
+ Arrays:
+    string names[10] -> uma lista que suporta somente 10 elementos
+
+    names[0] = "David" -> seta o espaco de indice 10 do Array para "David"
+
+Quando chamamos algum elemento do array names[0], o computador pega o endereço do ARRAY e adiciona o indice 0, por exemplo:
+    names = 00x01150
+    names[0]
+    names = 00x01150 + 00x00000
+
+    O endereco de memoria do array é sempre o primeiro item na memoria
+
+    [0] = 00x01150
+    [1] = 00x01151
+    [2] = 00x01152
+    [3] = 00x01153
+    [4] = 00x01154
+
+Quando, names = 00x01150 + 00x00000, o computador esta basicamente dizendop para pegar o endereco do array e nao adicionar nada
+    names[1] = "Hello"
+    names[2] = "David"
+
+    names[1] = 00x01150 + 00x00001 -> Hello
+    names[2] = 00x01150 + 00x00002 -> David
+
+Diferencas entre Array e Vector:
+    Array: alocamos previamente quanto de espaco da memoria o array ira usar.
+    vector: dinamico. novos espacos vao sendo alocados conforme a necessidade
+
+
+EM C++ ARRAYS SAO SIMPLESMENTE ENDERECOS DE MEMORIA, POR ISSO QUE AO NAVEGAR POR ELES SE FAZ MEMORY MATH
+
+sprites[i].setTextureRect(sf::IntRect (i * tileWidth, 0 * tileHeight, tileWidth, tileHeight))
+    Explicacao: seta a textura do indice de sprites [i] equivalente ao indice de numero [i] da imagem
+
+    LARGURA * i
+
+    sprites[0] = [0 * 16, 0]
+    sprites[1] = [1 * 16, 0]
+    sprites[2] = [2 * 16, 0]
