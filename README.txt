@@ -249,3 +249,59 @@ sprites[i].setTextureRect(sf::IntRect (i * tileWidth, 0 * tileHeight, tileWidth,
     sprites[0] = [0 * 16, 0]
     sprites[1] = [1 * 16, 0]
     sprites[2] = [2 * 16, 0]
+
+
+
+----- Pointers -----
+Tile: id e um texture pointer e um sprite.
+
+RenderWindow window
+Draw (&window)
+   - Ao inves de criar um novo objeto, estou referenciando um objeto ja existente
+
+
+
+REDUZIR O CONSUMO DE MEMORIA
+   
+  T1      T2
+[10mb]  [20mb]
+
+Texture t = aponta para T1
+Texture R = aponta para T2     = 30mb total
+
+
+Um ponteiro guarda um endereco de memoria
+
+  T1      T2      T3
+[10mb]  [20mb]  [20mb]
+
+Txture t = aponta para T1
+texture R = aponta para T2
+Texture C = aponta para T3    = 50mb total
+
+* Nao tem pq criar um novo objeto exatamente igual ao anterior. Texture C pode apontar para T2
+
+  T1      T2
+[10mb]  [20mb]
+
+Texture t = aponta para T1
+Texture R = aponta para T2
+Texture C = aponta para T2    = 30mb total
+
+
+Pode mudar para onde o ponteiro esta apontando
+
+Texture* C
+
+Diferenç Ponteiro e referencia
+Pont = texture* C
+Ref = Texture& C
+
+Referencia nao se pode mudar o objeto ao qual ela esta referenciando
+
+* Referencias sao geralmente usadas quando passamos algo por uma funcao
+
+
+Ponteiro: uma variavel de 8 bytes
+
+Problema com ponteiros: quando o objeto para o qual o ponteiro esta apontando é deletado, ele continua apontando para o endereço de memoria, o qual esta vazio. Assim, quando tentar usar o ponteiro, o programa crasha.
